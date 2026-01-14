@@ -1,0 +1,57 @@
+package com.example.studentsapp
+
+import android.os.Bundle
+import android.widget.Button
+import android.widget.CheckBox
+import android.widget.EditText
+import androidx.appcompat.app.AppCompatActivity
+
+class EditStudentActivity : AppCompatActivity() {
+
+    private var studentId: String = ""
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_edit_student)
+
+        studentId = intent.getStringExtra("studentId") ?: ""
+
+        val nameInput = findViewById<EditText>(R.id.editNameInput)
+        val idInput = findViewById<EditText>(R.id.editIdInput)
+        val phoneInput = findViewById<EditText>(R.id.editPhoneInput)
+        val addressInput = findViewById<EditText>(R.id.editAddressInput)
+        val checkedBox = findViewById<CheckBox>(R.id.editCheckedBox)
+
+        val student = StudentRepository.getStudent(studentId)
+
+        if (student != null) {
+            nameInput.setText(student.name)
+            idInput.setText(student.id)
+            phoneInput.setText(student.phone)
+            addressInput.setText(student.address)
+            checkedBox.isChecked = student.isChecked
+        }
+
+        findViewById<Button>(R.id.saveEditButton).setOnClickListener {
+            StudentRepository.deleteStudent(studentId)
+            val newStudent = Student(
+                id = idInput.text.toString(),
+                name = nameInput.text.toString(),
+                phone = phoneInput.text.toString(),
+                address = addressInput.text.toString(),
+                isChecked = checkedBox.isChecked
+            )
+            StudentRepository.addStudent(newStudent)
+            finish()
+        }
+
+        findViewById<Button>(R.id.deleteButton).setOnClickListener {
+            StudentRepository.deleteStudent(studentId)
+            finish()
+        }
+
+        findViewById<Button>(R.id.cancelEditButton).setOnClickListener {
+            finish()
+        }
+    }
+}
