@@ -1,5 +1,6 @@
 package com.example.studentsapp
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.CheckBox
@@ -47,7 +48,9 @@ class EditStudentActivity : AppCompatActivity() {
 
         findViewById<Button>(R.id.deleteButton).setOnClickListener {
             StudentRepository.deleteStudent(studentId)
-            finish()
+            val intent = Intent(this, StudentsListActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+            startActivity(intent)
         }
 
         findViewById<Button>(R.id.cancelEditButton).setOnClickListener {
