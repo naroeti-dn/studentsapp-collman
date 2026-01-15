@@ -1,6 +1,7 @@
 package com.example.studentsapp
 
 import android.os.Bundle
+import android.view.MenuItem
 import android.widget.Button
 import android.widget.CheckBox
 import android.widget.EditText
@@ -11,6 +12,9 @@ class NewStudentActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_new_student)
+
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.title = "New Student"
 
         val nameInput = findViewById<EditText>(R.id.nameInput)
         val idInput = findViewById<EditText>(R.id.idInput)
@@ -35,5 +39,13 @@ class NewStudentActivity : AppCompatActivity() {
         cancelBtn.setOnClickListener {
             finish()
         }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == android.R.id.home) {
+            finish()
+            return true
+        }
+        return super.onOptionsItemSelected(item)
     }
 }

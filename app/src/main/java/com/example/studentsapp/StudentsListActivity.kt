@@ -16,6 +16,8 @@ class StudentsListActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_students_list)
 
+        supportActionBar?.title = "Students List"
+
         recyclerView = findViewById(R.id.recyclerView)
         recyclerView.layoutManager = LinearLayoutManager(this)
 
